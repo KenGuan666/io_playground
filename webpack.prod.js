@@ -9,5 +9,6 @@ module.exports = merge(common, {
   mode: 'production',
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    runtimeChunk: 'single',
   },
 });
