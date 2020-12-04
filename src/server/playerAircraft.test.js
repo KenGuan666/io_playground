@@ -1,11 +1,12 @@
-const Player = require('./player');
+const PlayerAircraft = require('./playerAircraft');
 const Bullet = require('./bullet');
+const Player = require('./player')
 const Constants = require('../shared/constants');
 
 describe('Player', () => {
   describe('update', () => {
     it('should gain score each second', () => {
-      const player = new Player('123', 'guest');
+      const player = new PlayerAircraft('123', new Player('guest'));
       const initialScore = player.score;
 
       player.update(1);
@@ -14,14 +15,14 @@ describe('Player', () => {
     });
 
     it('should fire bullet on update', () => {
-      const player = new Player('123', 'guest');
+      const player = new PlayerAircraft('123', new Player('guest'));
 
       expect(player.update(Constants.PLAYER_FIRE_COOLDOWN / 3))
         .toBeInstanceOf(Bullet);
     });
 
     it('should not fire bullet during cooldown', () => {
-      const player = new Player('123', 'guest');
+      const player = new PlayerAircraft('123', new Player('guest'));
 
       player.update(Constants.PLAYER_FIRE_COOLDOWN / 3);
 
@@ -30,7 +31,7 @@ describe('Player', () => {
   });
   describe('takeBulletDamage', () => {
     it('should take damage when hit', () => {
-      const player = new Player('123', 'guest');
+      const player = new PlayerAircraft('123', new Player('guest'));
 
       const initialHp = player.hp;
 
@@ -42,7 +43,7 @@ describe('Player', () => {
 
   describe('onDealtDamage', () => {
     it('should increment score when dealing damage', () => {
-      const player = new Player('123', 'guest');
+      const player = new PlayerAircraft('123', new Player('guest'));
 
       const initialScore = player.score;
 
@@ -54,7 +55,7 @@ describe('Player', () => {
 
   describe('serializeForUpdate', () => {
     it('include hp and direction in serialization', () => {
-      const player = new Player('123', 'guest');
+      const player = new PlayerAircraft('123', new Player('guest'));
 
       expect(player.serializeForUpdate())
         .toEqual(expect.objectContaining({

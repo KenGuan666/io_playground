@@ -4,7 +4,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const socketio = require('socket.io');
 
 const Constants = require('../shared/constants');
-const Game = require('./game');
+// const Game = require('./game');
+const Lobby = require('./lobby');
 const webpackConfig = require('../../webpack.dev.js');
 
 // Setup an Express server
@@ -32,22 +33,35 @@ const io = socketio(server);
 io.on('connection', socket => {
   console.log('Player connected!', socket.id);
 
-  socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
+  socket.on(Constants.MSG_TYPES.JOIN_LOBBY, joinLobby);
+  // socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
   socket.on('disconnect', onDisconnect);
 });
 
 // Setup the Game
-const game = new Game();
+// const game = new Game();
 
-function joinGame(username) {
-  game.addPlayer(this, username);
-}
+const lobby = new Lobby();
+
+function joinLobby(username) {
+  lobby.addNewPlayer(this, username);
+};
+
+// function joinGame(username) {
+//   game.addPlayer(this, username);
+// }
 
 function handleInput(dir) {
-  game.handleInput(this, dir);
-}
+  let game = lobby.findGameBySocketId(this.id);
+  if (game) {
+    game.handleInput(this, dir);
+  }
+};
 
 function onDisconnect() {
-  game.removePlayer(this);
-}
+  let game = lobby.findGameBySocketId(this.id);
+  if (game) {
+    game.removePlayer(this);
+  }
+};

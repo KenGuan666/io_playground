@@ -1,10 +1,17 @@
 const Constants = require('../shared/constants');
-const Player = require('./player');
+const PlayerAircraft = require('./playerAircraft');
 const applyCollisions = require('./collisions');
 
 class Game {
-  constructor() {
+
+  canJoinHalfWay = true;
+  minPlayer = 2;
+  maxPlayer = 50;
+
+  constructor(id) {
+    this.id = id;
     this.sockets = {};
+    this.numPlayers = 0;
     this.players = {};
     this.bullets = [];
     this.lastUpdateTime = Date.now();
@@ -12,13 +19,28 @@ class Game {
     setInterval(this.update.bind(this), 1000 / 60);
   }
 
-  addPlayer(socket, username) {
+  isJoinable() {
+    return this.numPlayers < this.maxPlayer;
+  }
+
+  addPlayer(socket, playerObj) {
+    if (!this.isJoinable()) {
+      return false;
+    }
+    this.numPlayers += 1;
     this.sockets[socket.id] = socket;
+
+    playerObj.curGameId = this.id;
 
     // Generate a position to start this player at.
     const x = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
-    this.players[socket.id] = new Player(socket.id, username, x, y);
+    this.players[socket.id] = new PlayerAircraft(socket.id, playerObj, x, y);
+
+    console.log("Sending Game Joined signal");
+    socket.emit(Constants.MSG_TYPES.GAME_JOINED);
+
+    return this.isJoinable();
   }
 
   removePlayer(socket) {

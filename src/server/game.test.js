@@ -1,4 +1,5 @@
 const Game = require('./game');
+const Player = require('./player');
 const Constants = require('../shared/constants');
 
 jest.useFakeTimers();
@@ -21,7 +22,7 @@ describe('Game', () => {
       id: '1234',
       emit: jest.fn(),
     };
-    game.addPlayer(socket, 'guest');
+    game.addPlayer(socket, new Player('guest'));
 
     jest.runOnlyPendingTimers();
     expect(socket.emit).toHaveBeenCalledTimes(0);
@@ -40,7 +41,7 @@ describe('Game', () => {
         id: '1234',
         emit: jest.fn(),
       };
-      game.addPlayer(socket, 'guest');
+      game.addPlayer(socket, new Player('guest'));
 
       game.handleInput(socket, 2);
 
