@@ -62,6 +62,12 @@ class Lobby {
         return player ? this.findGame(player.curGameId) : null;
     }
 
+    removeGameById(id) {
+        console.log("Deleting game");
+        delete this.joinableGames[id];
+        delete this.unjoinableGames[id];
+    }
+
     createNewGame(socketIds) {
         let gameId = uuid();
         let game = new Game(gameId);

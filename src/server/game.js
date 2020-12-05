@@ -23,6 +23,10 @@ class Game {
     return this.numPlayers < this.maxPlayer;
   }
 
+  shouldBeDeleted() {
+    return this.numPlayers == 0;
+  }
+
   addPlayer(socket, playerObj) {
     if (!this.isJoinable()) {
       return false;
@@ -44,6 +48,7 @@ class Game {
   }
 
   removePlayer(socket) {
+    this.numPlayers -= 1;
     delete this.sockets[socket.id];
     delete this.players[socket.id];
   }

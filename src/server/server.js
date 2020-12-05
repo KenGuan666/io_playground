@@ -63,5 +63,8 @@ function onDisconnect() {
   let game = lobby.findGameBySocketId(this.id);
   if (game) {
     game.removePlayer(this);
+    if (game.shouldBeDeleted()) {
+      lobby.removeGameById(game.id);
+    }
   }
 };
