@@ -16,6 +16,7 @@ import './css/main.css';
 const playMenu = document.getElementById('play-menu');
 const playButton = document.getElementById('play-button');
 const usernameInput = document.getElementById('username-input');
+const waitScreen = document.getElementById('wait-for-game-screen');
 
 Promise.all([
   connect({ prepareGame, onGameOver }),
@@ -27,11 +28,13 @@ Promise.all([
     // Play!
     joinLobby(usernameInput.value);
     playMenu.classList.add('hidden');
+    waitScreen.classList.remove('hidden');
   };
 }).catch(console.error);
 
 function prepareGame() {
   console.log("Game Joined!");
+  waitScreen.classList.add('hidden');
   initState();
   startCapturingInput();
   startRendering();

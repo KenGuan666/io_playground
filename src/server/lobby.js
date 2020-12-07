@@ -1,13 +1,13 @@
 const Constants = require('../shared/constants');
-const Game = require('./game');
+const DemoGame = require('./demoGame');
 const Player = require('./player');
-const { uuid } = require('uuidv4');
+const { v4 } = require('uuid');
 
 // import { v4 as uuidv4 } from 'uuid';
 
 class Lobby {
     constructor() {
-        this.dummyGame = new Game(null);
+        this.dummyGame = new DemoGame(null);
         this.sockets = {};
         this.numIdlePlayers = 0;
         this.idlePlayers = {};
@@ -63,14 +63,13 @@ class Lobby {
     }
 
     removeGameById(id) {
-        console.log("Deleting game");
         delete this.joinableGames[id];
         delete this.unjoinableGames[id];
     }
 
     createNewGame(socketIds) {
-        let gameId = uuid();
-        let game = new Game(gameId);
+        let gameId = v4();
+        let game = new DemoGame(gameId);
         socketIds.forEach(socketId => {
             if (this.sockets[socketId]) {
                 game.addPlayer(this.sockets[socketId], this.idlePlayers[socketId]);

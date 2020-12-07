@@ -1,5 +1,5 @@
 const applyCollisions = require('./collisions');
-const Constants = require('../shared/constants');
+const Constants = require('../../shared/constants');
 const PlayerAircraft = require('./playerAircraft');
 const Bullet = require('./bullet');
 

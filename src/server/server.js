@@ -4,7 +4,6 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const socketio = require('socket.io');
 
 const Constants = require('../shared/constants');
-// const Game = require('./game');
 const Lobby = require('./lobby');
 const webpackConfig = require('../../webpack.dev.js');
 
@@ -38,9 +37,6 @@ io.on('connection', socket => {
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
   socket.on('disconnect', onDisconnect);
 });
-
-// Setup the Game
-// const game = new Game();
 
 const lobby = new Lobby();
 

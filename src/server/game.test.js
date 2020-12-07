@@ -1,4 +1,4 @@
-const Game = require('./game');
+const DemoGame = require('./demoGame');
 const Player = require('./player');
 const Constants = require('../shared/constants');
 
@@ -6,7 +6,7 @@ jest.useFakeTimers();
 
 describe('Game', () => {
   it('should update the game on an interval', () => {
-    const game = new Game();
+    const game = new DemoGame();
 
     // Force the game to have been created in the past
     game.lastUpdateTime = Date.now() - 10;
@@ -17,7 +17,7 @@ describe('Game', () => {
   });
 
   it('should send updates on every second update', () => {
-    const game = new Game();
+    const game = new DemoGame();
     const socket = {
       id: '1234',
       emit: jest.fn(),
@@ -36,7 +36,7 @@ describe('Game', () => {
 
   describe('handleInput', () => {
     it('should update the direction of a player', () => {
-      const game = new Game();
+      const game = new DemoGame();
       const socket = {
         id: '1234',
         emit: jest.fn(),

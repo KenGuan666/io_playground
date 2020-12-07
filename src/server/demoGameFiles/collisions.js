@@ -1,4 +1,4 @@
-const Constants = require('../shared/constants');
+const Constants = require('../../shared/constants');
 
 // Returns an array of bullets to be destroyed.
 function applyCollisions(players, bullets) {

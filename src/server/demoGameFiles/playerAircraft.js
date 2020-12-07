@@ -1,6 +1,6 @@
 const ObjectClass = require('./object');
 const Bullet = require('./bullet');
-const Constants = require('../shared/constants');
+const Constants = require('../../shared/constants');
 
 class PlayerAircraft extends ObjectClass {
   constructor(id, playerObj, x, y) {

@@ -1,7 +1,7 @@
 const PlayerAircraft = require('./playerAircraft');
 const Bullet = require('./bullet');
-const Player = require('./player')
-const Constants = require('../shared/constants');
+const Player = require('../player')
+const Constants = require('../../shared/constants');
 
 describe('Player', () => {
   describe('update', () => {
