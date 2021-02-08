@@ -1,6 +1,0 @@
-class Map {
-
-    constructor(numPlayers) {
-
-    }
-}

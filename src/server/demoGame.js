@@ -36,7 +36,7 @@ class DemoGame extends Game {
     const y = Constants.MAP_SIZE * (0.25 + Math.random() * 0.5);
     this.players[socket.id] = new PlayerAircraft(socket.id, playerObj, x, y);
 
-    console.log("Sending Game Joined signal");
+    console.log(`Sending Game Joined signal to ${socket.id}`);
     socket.emit(Constants.MSG_TYPES.GAME_JOINED);
 
     return this.isJoinable();
